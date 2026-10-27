@@ -1,0 +1,39 @@
+:root {
+  --fg-color: #000000;
+  --bg-color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg-color: #ffffff;
+    --bg-color: #000000;
+  }
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100vh;
+  color: var(--fg-color);
+  background: var(--bg-color);
+}
+
+nav > ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+nav > ul > li {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+main {
+  display: flex;
+}
+
+main > section:not(:target) {
+  display: none;
+}
