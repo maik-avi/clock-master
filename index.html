@@ -12,14 +12,58 @@
     <link rel="stylesheet" href="./src/styles.css">
   </head>
   <body>
-    <nav>
-      <ul>
-        <li><a href="#clock">Clock</a></li>
-        <li><a href="#alarm">Alarm</a></li>
-        <li><a href="#stopwatch">Stopwatch</a></li>
-        <li><a href="#timer">Timer</a></li>
-      </ul>
-    </nav>
+
+    <section class="launcher" aria-labelledby="launcher-title">
+
+      <h1 id="launcher-title" class="launcher-title">
+        Hello TimeMaster...
+      </h1>
+      
+      <nav class="tool-grid">
+        <ul>
+          <li>
+            <a href="#clock" class="tool-card">
+              <span
+                class="material-icons">
+                schedule
+              </span>
+              <span>Rellotge</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#alarm" class="tool-card">
+              <span
+                class="material-icons">
+                alarm
+              </span>
+              <span>Alarm</span>
+            </a>
+          </li>
+          <li>
+            <a href="#timer" class="tool-card">
+              <span
+                class="material-icons">
+                hourglass_top
+              </span>
+              <span>Timer</span>
+            </a>
+          </li>
+          <li>
+            <a href="#stopwatch" class="tool-card">
+              <span
+                class="material-icons">
+                timer
+              </span>
+              <span>Stopwatch</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+
+    </section>
+    
     <main>
       <section id="clock">
         <x-clock>
