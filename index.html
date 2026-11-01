@@ -13,7 +13,7 @@
   </head>
   <body>
 
-    <section class="launcher" aria-labelledby="launcher-title">
+    <section class="launcher">
 
       <h1 id="launcher-title" class="launcher-title">
         Hello TimeMaster...
@@ -65,44 +65,112 @@
     </section>
     
     <main>
-      <section id="clock">
+      <section id="clock" class="tool-view">
+
+        <h2 id="clock-title" class="view-title">
+          Rellotge
+        </h2>
+
         <x-clock>
           <time>00:00:00</time>
         </x-clock>
       </section>
-      <section id="alarm">
+
+
+      <section id="alarm" class="tool-view">
+        <h2 id="alarm-title" class="view-title">
+          Alarmes
+        </h2>
+
         <x-alarm>
+
           <template>
-            <section class="alarms">
-              <input type="time" min="00:00" max="23:59" step="1" />
-              <section class="controls">
-                <button class="start material-icons">alarm_on</button>
-                <button class="pause material-icons">alarm_off</button>
-                <button class="delete material-icons">delete</button>
-              </section>
-            </section>
+            <div class="alarms" paused>
+              <input
+                type="time"
+                min="00:00"
+                max="23:59"
+                step="60"
+              />
+
+              <p class="alarm-status">Desactivada</p>
+
+              <div class="controls">
+                <button
+                  type="button"
+                  class="start material-icons"
+                  title="Activar alarma"
+                >
+                  alarm_on
+                </button>
+                <button
+                  type="button"
+                  class="pause material-icons"                 
+                  title="Desactivar alarma"                 
+                >
+                  alarm_off
+                </button>
+                <button
+                  type="button"
+                  class="delete material-icons"                 
+                  title="Eliminar alarma"
+                >
+                  delete
+                </button>
+              </div>
+            </div>
           </template>
-          <section class="items"></section>
-          <section class="controls">
-            <button class="add material-icons">add_alarm</button>
-          </section>
-        </x-alarm>
+          <div class="items"></div>
+          <div class="controls">
+            <button
+              type="button"
+              class="add material-icons"              
+              title="Afegir alarma"
+            >
+              add_alarm
+            </button>
+          </div>
       </section>
+
       <section id="stopwatch">
         <x-stopwatch>
           <time datetime="PT0S">00:00:00.00</time>
-          <section class="controls">
-            <button class="start material-icons">timer</button>
-            <button class="pause material-icons">timer_off</button>
-            <button class="restart material-icons">restart_alt</button>
-          </section>
+          <p class="tool-status"></p>
+          <div class="controls">
+           <button
+              type="button"
+              class="start material-icons"              
+              title="Iniciar"
+            >
+              play_arrow
+            </button>
+            <button
+              type="button"
+              class="pause material-icons"
+              title="Pausar"
+            >
+              pause
+            </button>
+            <button
+              type="button"
+              class="restart material-icons"
+              title="Reiniciar">
+              restart_alt
+            </button>
+        </div>
         </x-stopwatch>
       </section>
-      <section id="timer">
+
+      <section id="timer" class="tool-view">
+
+        <h2 id="timer-title" class="view-title">
+          Temporitzador
+        </h2>
         <x-timer>
           <time datetime="PT0S">00:00:00.00</time>
-          <section class="items">
-            <section class="timers">
+          <p class="tool-status">Aturat</p>
+          <div class="items">
+            <div class="timers">
               <input
                 type="time"
                 min="00:00:00"
@@ -117,15 +185,45 @@
                 value="00:01:00"
                 step="1"
               />
-            </section>
-          </section>
-          <section class="controls">
-            <button class="start material-icons">timer</button>
-            <button class="pause material-icons">timer_off</button>
-            <button class="restart material-icons">restart_alt</button>
-            <button class="loop material-icons">loop</button>
-            <button class="no-loop material-icons">sync_disabled</button>
-          </section>
+            </div>
+          </div>
+          <div class="controls">
+            <button
+              type="button"
+              class="start material-icons"
+              title="Iniciar"
+            >
+              play_arrow
+            </button>
+            <button
+              type="button"
+              class="pause material-icons"
+              title="Pausar"
+            >
+              pause
+            </button>
+            <button
+              type="button"
+              class="restart material-icons"
+              title="Reiniciar"
+            >
+              restart_alt
+            </button>
+            <button
+              type="button"
+              class="loop material-icons"
+              title="Repetir"
+            >
+              loop
+            </button>
+            <button
+              type="button"
+              class="no-loop material-icons"
+              title="No repetir"
+            >
+              sync_disabled
+            </button>
+          </div>
         </x-timer>
       </section>
     </main>
