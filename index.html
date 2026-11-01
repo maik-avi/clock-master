@@ -65,20 +65,36 @@
     </section>
     
     <main>
-      <section id="clock">
+      <section id="clock" class="tool-view">
+
+        <h2 id="clock-title" class="view-title">
+          Rellotge
+        </h2>
+
         <x-clock>
           <time>00:00:00</time>
         </x-clock>
       </section>
-      <section id="alarm">
+
+
+      <section id="alarm" class="tool-view">
+
+        <h2 id="alarm-title" class="view-title">
+          Alarmes
+        </h2>
+
         <x-alarm>
+
           <template>
+
             <section class="alarms">
+
               <input type="time" min="00:00" max="23:59" step="1" />
+
               <section class="controls">
-                <button class="start material-icons">alarm_on</button>
-                <button class="pause material-icons">alarm_off</button>
-                <button class="delete material-icons">delete</button>
+                <button type="button" class="start material-icons">alarm_on</button>
+                <button type="button" class="pause material-icons">alarm_off</button>
+                <button type="button" class="delete material-icons">delete</button>
               </section>
             </section>
           </template>
@@ -92,13 +108,24 @@
         <x-stopwatch>
           <time datetime="PT0S">00:00:00.00</time>
           <section class="controls">
-            <button class="start material-icons">timer</button>
-            <button class="pause material-icons">timer_off</button>
-            <button class="restart material-icons">restart_alt</button>
+            <div class="items"></div>
+
+          <div class="controls">
+            <button
+              type="button"
+              class="add material-icons">
+              add_alarm
+            </button>
+          </div>
           </section>
         </x-stopwatch>
       </section>
-      <section id="timer">
+
+      <section id="timer" class="tool-view">
+
+        <h2 id="timer-title" class="view-title">
+          Temporitzador
+        </h2>
         <x-timer>
           <time datetime="PT0S">00:00:00.00</time>
           <section class="items">
@@ -119,13 +146,13 @@
               />
             </section>
           </section>
-          <section class="controls">
-            <button class="start material-icons">timer</button>
-            <button class="pause material-icons">timer_off</button>
-            <button class="restart material-icons">restart_alt</button>
-            <button class="loop material-icons">loop</button>
-            <button class="no-loop material-icons">sync_disabled</button>
-          </section>
+          <div class="controls">
+            <button type="button" class="start material-icons">timer</button>
+            <button type="button" class="pause material-icons">timer_off</button>
+            <button type="button" class="restart material-icons">restart_alt</button>
+            <button type="button" class="loop material-icons">loop</button>
+            <button type="button" class="no-loop material-icons">sync_disabled</button>
+          </div>
         </x-timer>
       </section>
     </main>
