@@ -78,6 +78,10 @@
 
 
       <section id="alarm" class="tool-view">
+<<<<<<< HEAD
+=======
+
+>>>>>>> e74a889e3ab0c91b524e03e6f5f075c8d9c42668
         <h2 id="alarm-title" class="view-title">
           Alarmes
         </h2>
@@ -85,6 +89,7 @@
         <x-alarm>
 
           <template>
+<<<<<<< HEAD
             <div class="alarms" paused>
               <input
                 type="time"
@@ -119,6 +124,19 @@
                 </button>
               </div>
             </div>
+=======
+
+            <section class="alarms">
+
+              <input type="time" min="00:00" max="23:59" step="1" />
+
+              <section class="controls">
+                <button type="button" class="start material-icons">alarm_on</button>
+                <button type="button" class="pause material-icons">alarm_off</button>
+                <button type="button" class="delete material-icons">delete</button>
+              </section>
+            </section>
+>>>>>>> e74a889e3ab0c91b524e03e6f5f075c8d9c42668
           </template>
           <div class="items"></div>
           <div class="controls">
@@ -135,6 +153,7 @@
       <section id="stopwatch">
         <x-stopwatch>
           <time datetime="PT0S">00:00:00.00</time>
+<<<<<<< HEAD
           <p class="tool-status"></p>
           <div class="controls">
            <button
@@ -158,6 +177,19 @@
               restart_alt
             </button>
         </div>
+=======
+          <section class="controls">
+            <div class="items"></div>
+
+          <div class="controls">
+            <button
+              type="button"
+              class="add material-icons">
+              add_alarm
+            </button>
+          </div>
+          </section>
+>>>>>>> e74a889e3ab0c91b524e03e6f5f075c8d9c42668
         </x-stopwatch>
       </section>
 
@@ -185,6 +217,7 @@
                 value="00:01:00"
                 step="1"
               />
+<<<<<<< HEAD
             </div>
           </div>
           <div class="controls">
@@ -223,6 +256,16 @@
             >
               sync_disabled
             </button>
+=======
+            </section>
+          </section>
+          <div class="controls">
+            <button type="button" class="start material-icons">timer</button>
+            <button type="button" class="pause material-icons">timer_off</button>
+            <button type="button" class="restart material-icons">restart_alt</button>
+            <button type="button" class="loop material-icons">loop</button>
+            <button type="button" class="no-loop material-icons">sync_disabled</button>
+>>>>>>> e74a889e3ab0c91b524e03e6f5f075c8d9c42668
           </div>
         </x-timer>
       </section>

@@ -179,6 +179,7 @@ body:has(main > section:target) .launcher-title {
   display: none;
 }
 
+<<<<<<< HEAD
 body:has(#clock:target) .tool-card[href="#clock"],
 body:has(#alarm:target) .tool-card[href="#alarm"],
 body:has(#timer:target) .tool-card[href="#timer"],
@@ -373,3 +374,5 @@ input[type="time"] {
   border: 1px solid var(--card-border);
   border-radius: 0.8rem;
 }
+=======
+>>>>>>> e74a889e3ab0c91b524e03e6f5f075c8d9c42668
