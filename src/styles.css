@@ -65,6 +65,12 @@
   }
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -118,8 +124,6 @@ main {
   min-height: 6rem;
   margin-inline: auto;
   padding: 1rem 0.75 rem;
-
-  box-sizing: border-box;
 }
 
 .tool-grid > li {
@@ -151,10 +155,13 @@ main {
 .tool-card .material-icons {
   color: var(--accent);
   font-size: 2.5rem;
+    transition: transform 180ms ease;
+
 }
 
-.tool-card .material-icons {
-  transition: transform 180ms ease;
+.tool-card:focus-visible {
+  outline: 0.2rem solid var(--accent);
+  outline-offset: 0.25rem;
 }
 
 @media (hover: hover) {
@@ -319,7 +326,7 @@ x-stopwatch {
   height: 3.25rem;
   padding: 0;
 
-  color: var(--accent);
+  color: var(--text-secondary);
   background-color: var(--card-background);
 
   border: 1px solid var(--card-border);
@@ -329,12 +336,20 @@ x-stopwatch {
   cursor: pointer;
 
   transition:
+    color 150ms ease,
     transform 150ms ease,
-    background-color 150ms ease;
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .controls button:active {
   transform: scale(0.92);
+}
+
+.controls button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
 }
 
 .controls button:focus-visible {
@@ -347,6 +362,11 @@ x-stopwatch {
     background-color: var(--card-background-hover);
     transform: translateY(-0.15rem);
   }
+
+  .controls button:disabled:hover {
+    background-color: var(--control-background);
+    transform: none;
+  }
 }
 
 .items,
@@ -356,6 +376,24 @@ x-stopwatch {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+}
+
+.alarms {
+  width: min(100%, 22rem);
+  padding: 1rem;
+  background-color: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 1.25rem;
+  box-shadow: 0 0.3rem 1rem var(--card-shadow);
+}
+
+.tool-status,
+.alarm-status {
+  min-height: 1.25rem;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 input[type="time"] {
@@ -372,4 +410,33 @@ input[type="time"] {
 
   border: 1px solid var(--card-border);
   border-radius: 0.8rem;
+}
+
+input[type="time"]:focus-visible {
+  outline: 0.2rem solid var(--accent);
+  outline-offset: 0.15rem;
+}
+
+input.current-interval {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 0.2rem var(--selected-background);
+}
+
+.controls .start {
+  color: var(--running);
+}
+
+.controls .pause {
+  color: var(--paused);
+}
+
+.controls .restart,
+.controls .delete {
+  color: var(--danger);
+}
+
+.controls .add,
+.controls .loop,
+.controls .no-loop {
+  color: var(--accent);
 }
