@@ -123,7 +123,7 @@ main {
   max-width: 8rem;
   min-height: 6rem;
   margin-inline: auto;
-  padding: 1rem 0.75 rem;
+  padding: 1rem 0.75rem;
 }
 
 .tool-grid > li {
@@ -178,10 +178,6 @@ main > section:not(:target) {
   display: none;
 }
 
-main > section:not(:target) {
-  display: none;
-}
-
 body:has(main > section:target) .launcher-title {
   display: none;
 }
@@ -231,7 +227,7 @@ body:has(main > section:target) .tool-grid {
 }
 
 body:has(main > section:target) .tool-grid > li {
-  flex-direction: row;
+  flex: 1 1 0;
 }
 
 body:has(main > section:target) .tool-card {
@@ -439,4 +435,48 @@ input.current-interval {
 .controls .loop,
 .controls .no-loop {
   color: var(--accent);
+}
+
+x-stopwatch[data-state="running"] .start,
+x-timer[data-state="running"] .start {
+  color: var(--running);
+  background-color: var(--running-background);
+  border-color: var(--running);
+}
+
+x-stopwatch[data-state="paused"] .pause,
+x-timer[data-state="paused"] .pause {
+  color: var(--paused);
+  background-color: var(--paused-background);
+  border-color: var(--paused);
+}
+
+x-timer[data-state="finished"] .restart {
+  color: var(--danger);
+  background-color: var(--danger-background);
+  border-color: var(--danger);
+}
+
+x-timer[loop] .loop,
+x-timer:not([loop]) .no-loop {
+  color: var(--accent);
+  background-color: var(--selected-background);
+  border-color: var(--accent);
+}
+
+.alarms:not([paused]) .start {
+  color: var(--running);
+  background-color: var(--running-background);
+  border-color: var(--running);
+}
+
+.alarms[paused] .pause {
+  color: var(--paused);
+  background-color: var(--paused-background);
+  border-color: var(--paused);
+}
+
+.alarms[ringing] {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 0.25rem var(--danger-background);
 }

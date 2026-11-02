@@ -7,25 +7,64 @@ export default class Alarm extends HTMLElement {
     this.addEventListener("click", this);
     this.duration = 60 * 1000;
     this.#intervalCallback = () => {
-      this.alarms.forEach((alarm) => {
-        const { value } = alarm.querySelector("input");
-        const date =
-          new Date(value).getTime() ||
-          new Date(`${new Date().toLocaleDateString()} ${value}`).getTime();
-        if (date) {
-          const delta = Date.now() - date;
-          if (delta > 0 && delta < new Date(this.duration)) {
-            alarm.setAttribute("ringing", "");
-            this.dispatchEvent(
-              new CustomEvent("ring", { bubbles: true, detail: alarm }),
-            );
-            return;
-          }
-        }
+    const now = new Date();
 
-        alarm.removeAttribute("ringing");
-      });
-    };
+    this.alarms.forEach((alarm) => {
+      const status = alarm.querySelector(".alarm-status");
+
+      if (alarm.hasAttribute("paused")) {
+       if (alarm.hasAttribute("ringing")) {
+         alarm.removeAttribute("ringing");
+
+         this.dispatchEvent(
+          new CustomEvent("silence", {
+            bubbles: true,
+            detail: alarm,
+          }),
+        );
+      }
+
+      status.textContent = "Desactivada";
+      return;
+    }
+
+    const value = alarm.querySelector("input").value;
+
+    if (!value) {
+      return;
+    }
+
+    const [hours, minutes] = value.split(":").map(Number);
+
+    const shouldRing =
+      hours === now.getHours() &&
+      minutes === now.getMinutes();
+
+    if (shouldRing && !alarm.hasAttribute("ringing")) {
+      alarm.setAttribute("ringing", "");
+      status.textContent = "Sonant";
+
+      this.dispatchEvent(
+        new CustomEvent("ring", {
+          bubbles: true,
+          detail: alarm,
+        }),
+      );
+    }
+
+    if (!shouldRing && alarm.hasAttribute("ringing")) {
+      alarm.removeAttribute("ringing");
+      status.textContent = "Activada";
+
+      this.dispatchEvent(
+        new CustomEvent("silence", {
+          bubbles: true,
+          detail: alarm,
+        }),
+      );
+    }
+  });
+};
   }
 
   get alarms() {
@@ -52,8 +91,23 @@ export default class Alarm extends HTMLElement {
   }
 
   delete(alarm) {
-    this.querySelector(".items").removeChild(alarm);
+  if (!this.alarms.includes(alarm)) {
+    return;
   }
+
+  const wasRinging = alarm.hasAttribute("ringing");
+
+  alarm.remove();
+
+  if (wasRinging) {
+    this.dispatchEvent(
+      new CustomEvent("silence", {
+        bubbles: true,
+        detail: alarm,
+      }),
+    );
+  }
+}
 
   disconnectedCallback() {
     clearInterval(this.#intervalId);
@@ -74,14 +128,35 @@ export default class Alarm extends HTMLElement {
   }
 
   pause(alarm) {
-    if (this.alarms.includes(alarm)) {
-      alarm.setAttribute("paused", "");
-    }
+  if (!this.alarms.includes(alarm)) {
+    return;
   }
 
-  start(alarm) {
-    if (this.alarms.includes(alarm)) {
-      alarm.removeAttribute("paused");
-    }
+  const wasRinging = alarm.hasAttribute("ringing");
+
+  alarm.setAttribute("paused", "");
+  alarm.removeAttribute("ringing");
+  alarm.querySelector(".alarm-status").textContent = "Desactivada";
+
+  if (wasRinging) {
+    this.dispatchEvent(
+      new CustomEvent("silence", {
+        bubbles: true,
+        detail: alarm,
+      }),
+    );
   }
+}
+
+  start(alarm) {
+  if (!this.alarms.includes(alarm)) {
+    return;
+  }
+
+  alarm.removeAttribute("paused");
+  alarm.querySelector(".alarm-status").textContent = "Activada";
+
+  // Comprueba inmediatamente si coincide con la hora actual
+  this.#intervalCallback();
+}
 }

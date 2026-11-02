@@ -2,6 +2,33 @@ export default class Timer extends HTMLElement {
   #intervalCallback;
   #intervalId = 0;
 
+  #updateInterface(forcedState) {
+    const state =
+      forcedState ??
+      (!this.startTime ? "stopped" : this.paused ? "paused" : "running");
+
+    this.dataset.state = state;
+
+    const pauseButton = this.querySelector(".pause");
+    const status = this.querySelector(".tool-status");
+
+    
+
+    if (pauseButton) {
+      pauseButton.disabled = state === "stopped" || state === "finished";
+    }
+
+    if (status) {
+      status.textContent = {
+        stopped: "Aturat",
+        running: "En marxa",
+        paused: "Pausat",
+        finished: "Finalitzat",
+        invalid: "Configura una durada",
+      }[state];
+    }
+  }
+
   constructor() {
     super();
     this.addEventListener("click", this);
@@ -33,6 +60,9 @@ export default class Timer extends HTMLElement {
         inputs.forEach((input) => {
           input.classList.remove("current-interval");
         });
+        this.startTime = "";
+        this.paused = false;
+        this.#updateInterface("finished");
         this.dispatchEvent(new CustomEvent("stop", { bubbles: true }));
       }
 
@@ -74,13 +104,24 @@ export default class Timer extends HTMLElement {
       return;
     }
 
-    if (
-      (name === "paused" && newValue != null) ||
-      (name === "start-time" && !newValue)
-    ) {
-      clearInterval(this.#intervalId);
-      this.#intervalId = 0;
-    } else if (name === "start-time" && newValue && !this.#intervalId) {
+    if (name === "paused" || name === "start-time") {
+      const shouldRun = Boolean(this.startTime) && !this.paused;
+
+      if (!shouldRun) {
+        clearInterval(this.#intervalId);
+        this.#intervalId = 0;
+      } else if (!this.#intervalId) {
+        this.#intervalId = setInterval(this.#intervalCallback, 10);
+      }
+    }
+
+    this.#updateInterface();
+  }
+
+  connectedCallback() {
+    this.#updateInterface();
+
+    if (!this.paused && this.startTime && !this.#intervalId) {
       this.#intervalId = setInterval(this.#intervalCallback, 10);
     }
   }
@@ -90,6 +131,12 @@ export default class Timer extends HTMLElement {
   }
 
   handleEvent(event) {
+
+    const button = event.target.closest("button");
+    if (!button || !this.contains(button)) {
+      return;
+    }
+
     const { classList } = event.target;
     if (classList.contains("loop")) {
       this.loop = true;

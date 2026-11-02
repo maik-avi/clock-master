@@ -2,6 +2,31 @@ export default class Stopwatch extends HTMLElement {
   #intervalCallback;
   #intervalId = 0;
 
+  #updateInterface() {
+    const state = !this.startTime
+      ? "stopped"
+      : this.paused
+        ? "paused"
+        : "running";
+
+    this.dataset.state = state;
+
+    const pauseButton = this.querySelector(".pause");
+    const status = this.querySelector(".tool-status");
+    
+    if (pauseButton) {
+      pauseButton.disabled = state === "stopped";
+    }
+
+    if (status) {
+      status.textContent = {
+        stopped: "Aturat",
+        running: "En marxa",
+        paused: "Pausat",
+      }[state];
+    }
+  }
+
   constructor() {
     super();
     this.addEventListener("click", this);
@@ -38,18 +63,21 @@ export default class Stopwatch extends HTMLElement {
       return;
     }
 
-    if (
-      (name === "paused" && newValue != null) ||
-      (name === "start-time" && !newValue)
-    ) {
+    const shouldRun = Boolean(this.startTime) && !this.paused;
+
+    if (!shouldRun) {
       clearInterval(this.#intervalId);
       this.#intervalId = 0;
-    } else if (name === "start-time" && newValue && !this.#intervalId) {
+    } else if (!this.#intervalId) {
       this.#intervalId = setInterval(this.#intervalCallback, 10);
     }
+
+    this.#updateInterface();
   }
 
   connectedCallback() {
+    this.#updateInterface();
+
     if (!this.paused && this.startTime && !this.#intervalId) {
       this.#intervalId = setInterval(this.#intervalCallback, 10);
     }
